@@ -51,7 +51,7 @@ const LocalMusic = ({navigation}) => {
         {
           activeSongDetails !=="null"?
           <View>
-          <Bottom_Player_Tile />
+          <Bottom_Player_Tile navigation={navigation}/>
         </View>:null
         }
         

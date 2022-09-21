@@ -1,19 +1,27 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from 'expo-linear-gradient';
 import musicimg from "../../assets/musicimg.png"
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-const Bottom_Player_Tile = () => {
+import { setActiveSongStatus } from '../Redux/actions';
+const Bottom_Player_Tile = ({navigation}) => {
     const activeSong= useSelector(state => state.activesong);
+    const activestatus = useSelector(state => state.activesongstatus);
+    const dispatch = useDispatch();
+    const toggleStatus = () => {
+        dispatch(setActiveSongStatus(!activestatus));
+      }
     const icon = [
-        <AntDesign name="pausecircle" size={34} color="black" />,
+       activestatus? <AntDesign name="pausecircle" size={34} color="black" onPress={toggleStatus} /> : <AntDesign name="play" size={34} color="black" onPress={toggleStatus}/>,
         <MaterialIcons name="playlist-add" size={34} color="black" />
     ]
   return (
     <>
-   { activeSong && <LinearGradient colors={["#dedcdc", "#faf7f7"]} style={styles.main_cont} >
+   { activeSong && 
+//    <Pressable onPress={navigation.navigate("Player")}>
+   <LinearGradient colors={["#dedcdc", "#faf7f7"]} style={styles.main_cont}>
       
         <Image source={musicimg} style={{width: 50, height: 50}} />
 {/* {icon} */}
@@ -29,7 +37,10 @@ const Bottom_Player_Tile = () => {
   </View>
 
   </View>
-    </LinearGradient>}
+    </LinearGradient>
+    
+    // </Pressable>
+    }
     </>
   )
 }

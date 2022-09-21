@@ -6,12 +6,28 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveSongStatus } from '../Redux/actions';
+import { Audio } from 'expo-av';
 
 const Player = ({navigation}) => {
+  const dispatch = useDispatch();
+  const activestatus = useSelector(state => state.activesongstatus);
   const [time, setTime] = useState(0);
   let min,sec;
+  // async function playSound() {
+  //   console.log('Loading Sound');
+  //   const { sound } = await Audio.Sound.createAsync(
+  //      require(activeSongDetails.uri)
+  //   );
+  //   setSound(sound);
+
+  //   console.log('Playing Sound');
+  //   await sound.playAsync(); 
+  // }
+
   const activeSongDetails = useSelector(state=>state.activesong);
+  console.log(activeSongDetails);
 if(activeSongDetails !=="null")
   {
     if(Math.floor(activeSongDetails.duration/60)<10) {
@@ -29,10 +45,10 @@ if(activeSongDetails !=="null")
       sec =(Math.round(activeSongDetails.duration)-Math.floor(activeSongDetails.duration/60)*60).toString();
      }
     }
-    const [playing,setPlaying] = useState(false)
+    // const [playing,setPlaying] = useState(false)
     const imgpath ="https://englishtribuneimages.blob.core.windows.net/gallary-content/2022/5/2022_5$largeimg_837079638.jpg"
   return (
-    activeSongDetails!="null" ?
+    // activeSongDetails!="null" ?
     <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
       <AnimatedCircularProgress
       size={300}
@@ -51,8 +67,6 @@ if(activeSongDetails !=="null")
     )
   }
 </AnimatedCircularProgress>
-      <View style>
-      </View>
       <View style={styles.infocont}>
       <Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>{activeSongDetails.filename}</Text>
       <Text style={{color:'white',fontSize:10}}>By:-Singer</Text>
@@ -69,10 +83,10 @@ if(activeSongDetails !=="null")
       <View style={styles.playericon}>
       <AntDesign name="doubleleft" size={24} color="#fff"  />
     {
-      !playing ?
-      <Feather name="pause-circle" size={44} color="#fff" onPress={()=>{setPlaying(!playing)}}/>
+      activestatus ?
+      <Feather name="pause-circle" size={44} color="#fff" onPress={()=>{dispatch(setActiveSongStatus(!activestatus))}}/>
       :
-    <Feather name="play-circle" size={44} color="#fff" onPress={()=>{setPlaying(!playing)}} />
+    <Feather name="play-circle" size={44} color="#fff" onPress={()=>{dispatch(setActiveSongStatus(!activestatus))}} />
   }
       <AntDesign name="doubleright" size={24} color="#fff" />
       </View>
@@ -80,12 +94,12 @@ if(activeSongDetails !=="null")
       <BottomNav active={"head"} navigation={navigation}/>
       </View>
        </LinearGradient>
-      :
+      // :
 
-       <View>
-         <Text style={{color:"white",fontSize:20,fontWeight:20}}>No Music Is Playing Currently</Text>
-       </View>
-    
+      //  <View>
+      //    <Text style={{color:"white",fontSize:20,fontWeight:20}}>No Music Is Playing Currently</Text>
+      //  </View>
+  
   )
 }
 
