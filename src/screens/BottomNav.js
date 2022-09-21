@@ -38,9 +38,9 @@ const BottomNav = ({active,navigation}) => {
         {
             active==="allplaylist"
             ?
-            <View style={styles.navcont}>
-            <MaterialCommunityIcons name="playlist-music" size={30} color="black" style={styles.active} onPress={()=>{navigation.navigate('AllPlaylist')}}/>
-            <Text style={{color:'#bc00dd'}}>Playlist</Text>
+            <View style={styles.navcont} >
+            <MaterialCommunityIcons name="playlist-music" size={30} color="black" style={styles.active} onPress={()=>{navigation.navigate('AllPlaylist')}} />
+            <Text style={{color:'#bc00dd'}} >Playlist</Text>
             </View>
             :
             <View style={styles.navcont}>

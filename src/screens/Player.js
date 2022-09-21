@@ -6,19 +6,39 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { useSelector } from 'react-redux';
 
 const Player = ({navigation}) => {
   const [time, setTime] = useState(0);
-  
+  let min,sec;
+  const activeSongDetails = useSelector(state=>state.activesong);
+if(activeSongDetails !=="null")
+  {
+    if(Math.floor(activeSongDetails.duration/60)<10) {
+     min ="0".concat((Math.floor(activeSongDetails.duration/60)).toString());
+  }
+     else {
+       min =(Math.floor(activeSongDetails.duration/60)).toString();
+
+     }
+     console.log(min);
+     if (Math.round(activeSongDetails.duration)-Math.floor(activeSongDetails.duration/60)*60 <10) {
+      sec ="0"+(Math.round(activeSongDetails.duration)-Math.floor(activeSongDetails.duration/60)*60).toString()
+     }
+     else {
+      sec =(Math.round(activeSongDetails.duration)-Math.floor(activeSongDetails.duration/60)*60).toString();
+     }
+    }
     const [playing,setPlaying] = useState(false)
     const imgpath ="https://englishtribuneimages.blob.core.windows.net/gallary-content/2022/5/2022_5$largeimg_837079638.jpg"
   return (
-    <LinearGradient colors={['hsla(320, 12%, 20%, 1)','hsla(335, 8%, 31%, 1)','hsla(325, 6%, 39%, 1)','hsla(321, 10%, 44%, 1)','hsla(316, 5%, 40%, 1)']} style={styles.container}>
+    activeSongDetails!="null" ?
+    <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
       <AnimatedCircularProgress
       size={300}
   width={5}
   fill={100}
-  tintColor="hsla(318, 68%, 56%, 1)"
+  tintColor="#3c096c"
   backgroundColor="#3d5875"
   duration={30000}
   default={0}
@@ -34,7 +54,7 @@ const Player = ({navigation}) => {
       <View style>
       </View>
       <View style={styles.infocont}>
-      <Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>SongName</Text>
+      <Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>{activeSongDetails.filename}</Text>
       <Text style={{color:'white',fontSize:10}}>By:-Singer</Text>
       </View>
       <View style={styles.timecont}>
@@ -42,8 +62,8 @@ const Player = ({navigation}) => {
     <View style={styles.completedin}></View>
         </View>
         <View style={styles.timecount}>
-            <Text style={styles.time}>00.00</Text>
-            <Text style={styles.time}>01.00</Text>
+            <Text style={styles.time}>00:00</Text>
+            <Text style={styles.time}>{min +":"+ sec}</Text>
         </View>
       </View>
       <View style={styles.playericon}>
@@ -59,7 +79,13 @@ const Player = ({navigation}) => {
       <View style={[styles.bottomnav,styles.shadowProp,styles.elevation]}>
       <BottomNav active={"head"} navigation={navigation}/>
       </View>
-    </LinearGradient>
+       </LinearGradient>
+      :
+
+       <View>
+         <Text style={{color:"white",fontSize:20,fontWeight:20}}>No Music Is Playing Currently</Text>
+       </View>
+    
   )
 }
 
@@ -111,7 +137,7 @@ const styles = StyleSheet.create({
       },
       completedin:{
         width: '50%',
-        backgroundColor: 'linear-gradient(90deg, hsla(318, 68%, 56%, 1) 0%, hsla(336, 83%, 59%, 1) 48%, hsla(313, 69%, 58%, 1) 98%, hsla(212, 74%, 50%, 1) 100%)',
+        backgroundColor: '#3c096c',
         height: 3,
         borderRadius: 50,
       },
