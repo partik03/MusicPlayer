@@ -7,6 +7,9 @@ const Account = ({navigation}) => {
   return (
     <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
 <TextInput style={styles.input} placeholder="Email" />
+<View style={[styles.bottomnav,styles.shadowProp,styles.elevation]}>
+      <BottomNav active={"account"} navigation={navigation}/>
+      </View>
     </LinearGradient>
   )
 }
@@ -37,5 +40,12 @@ const styles = StyleSheet.create({
         elevation: 100,
         shadowColor: 'black',
       },
-      
+      input :{
+        color: 'black',
+        backgroundColor:'white',
+        width: "100%",
+        height: 50,
+
+      }
+
 })
