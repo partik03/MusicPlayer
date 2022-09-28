@@ -1,7 +1,8 @@
 
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View,TouchableOpacity,TouchableHighlight,TouchableWithoutFeedback } from 'react-native'
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
+import BottomNav from './BottomNav';
 import Music_Tile from '../components/Music_Tile';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -12,12 +13,30 @@ import { setActiveSong, setActiveSongStatus } from '../Redux/actions';
 import Bottom_Player_Tile from '../components/Bottom_Player_Tile';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const LocalMusic = ({navigation}) => {
   const mysongs = useSelector(state => state.allsongs);
   const dispatch = useDispatch();
-  console.log(mysongs[0]);
+  // console.log(mysongs[0]);
   const handlePress =(i)=>{
     dispatch(setActiveSong(i))
+    try {
+      AsyncStorage.setItem('activesong_localstorage',JSON.stringify(i));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const getLocalSong =()=>{
+    AsyncStorage.getItem('activesong_localstorage').then(value=>{
+      console.log("Inside of get local song",value);
+      dispatch(setActiveSong(JSON.parse(value)));
+    })
+    .catch(e=>{
+      console.log(e);
+    })
+    .finally(e=>{
+      console.log(e);
+    })
   }
   const activeSongDetails = useSelector(state => state.activesong);
   let activeSongUri = null;
@@ -28,11 +47,15 @@ const LocalMusic = ({navigation}) => {
   const toggleStatus = () => {
     dispatch(setActiveSongStatus(!activestatus));
   }
+  useEffect(() => {
+    getLocalSong();
+  }, [])
+  
   return (
     <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
         <View style={styles.head_cont}>
 
-<Text style={styles.head}>Local Music</Text>
+    <Text style={styles.head}>Local Music</Text>
         </View>
         <ScrollView style={{width:"100%",height:"100%"}}>
         <View style={[styles.music,styles.music_cont]} >
@@ -40,9 +63,9 @@ const LocalMusic = ({navigation}) => {
             mysongs.map((item,index)=>{
              return(
                    item.uri ===activeSongUri?
-                  <Music_Tile_active title={item.filename} key={index} icon={[activestatus ?<AntDesign name="pausecircle" size={34} color="black" onPress={toggleStatus} /> : <AntDesign name="play" size={34} color="black"  onPress={toggleStatus} />,<MaterialIcons name="playlist-add" size={34} color="black" />]} />
+                  <Music_Tile_active title={item.filename} key={index} icon={[activestatus ?<AntDesign name="pausecircle" size={34} color="black" onPress={toggleStatus} /> : <AntDesign name="play" size={34} color="black"  onPress={toggleStatus} />,<MaterialIcons name="playlist-add" onPress={()=>{navigation.navigate("AddToPlaylist",{song:item})}}  size={34} color="black" />]} />
                   :
-              <Music_Tile title={item.filename} key={index} icon={[<AntDesign name="play" size={34} color="white" onPress={e=>{handlePress(item)}} />,<MaterialIcons name="playlist-add" size={34} color="white" />]} />
+              <Music_Tile title={item.filename} key={index} icon={[<AntDesign name="play" size={34} color="white" onPress={e=>{handlePress(item)}} />,<MaterialIcons name="playlist-add" onPress={()=>{navigation.navigate("AddToPlaylist",{song:item})}} size={34} color="white" />]} />
              )
             })
           }
@@ -50,11 +73,17 @@ const LocalMusic = ({navigation}) => {
         </ScrollView>
         {
           activeSongDetails !=="null"?
-          <View>
+          <View style={styles.bottom_cont}>
+            {/* <TouchableWithoutFeedback onLongPress={navigation.navigate("Player")}> */}
           <Bottom_Player_Tile navigation={navigation}/>
-        </View>:null
+          {/* </TouchableWithoutFeedback> */}
+        </View>
+        :
+        null
         }
-        
+         <View style={[styles.bottomnav,styles.shadowProp,styles.elevation]}>
+      <BottomNav active={"all"} navigation={navigation}/>
+      </View>
     </LinearGradient>
   )
 }
@@ -89,5 +118,30 @@ const styles = StyleSheet.create({
           height: "90%",
         display: 'flex',
         alignItems:'center',
-      }
+      },
+      bottom_cont:{
+        backgroundColor: "red",
+        position: "absolute",
+        bottom: 70,
+        width: "100%",
+        height: 70,
+
+      },
+      bottomnav:{
+        display: 'flex',
+        width: "100%",
+        position: 'absolute',
+        alignItems:'center',
+        bottom: 0,
+      },
+      shadowProp: {
+        shadowColor: 'black',
+        shadowOffset: {width: -7, height: 5},
+        shadowOpacity: 1,
+        shadowRadius: 3,
+      },
+      elevation: {
+        elevation: 100,
+        shadowColor: 'black',
+      },
 })

@@ -1,6 +1,6 @@
 import { Alert, StyleSheet, Text, View,StatusBar } from 'react-native'
 import React from 'react'
-import BottomNav from './BottomNav'
+import BottomNav from './BottomNav';
 import { useState ,useEffect,} from 'react'
 import * as MediaLib from 'expo-media-library';
 import { setAllSongs } from '../Redux/actions';

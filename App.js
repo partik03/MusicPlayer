@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import { store } from './src/Redux/store';
 import LocalMusic from './src/screens/LocalMusic';
 import OnlineMusic from './src/screens/OnlineMusic';
+import AddToPlaylist from './src/screens/AddToPlaylist';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -49,6 +50,11 @@ export default function App() {
         <Stack.Screen name="OnlineMusic" component={OnlineMusic} options={
           {
             headerShown:false,
+          }
+        } />
+        <Stack.Screen name="AddToPlaylist" component={AddToPlaylist} options={
+          {
+            headerShown:true,title:"Add to Playlist"
           }
         } />
       </Stack.Navigator>

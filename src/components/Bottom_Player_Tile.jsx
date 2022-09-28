@@ -1,4 +1,4 @@
-import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Button, Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,14 +15,10 @@ const Bottom_Player_Tile = ({navigation}) => {
       }
     const icon = [
        activestatus? <AntDesign name="pausecircle" size={34} color="black" onPress={toggleStatus} /> : <AntDesign name="play" size={34} color="black" onPress={toggleStatus}/>,
-        <MaterialIcons name="playlist-add" size={34} color="black" />
+        <MaterialIcons name="playlist-add" size={34} color="black" onPress={()=>{navigation.navigate("AddToPlaylist",{song:activeSong})}} />
     ]
-  return (
-    <>
-   { activeSong && 
-//    <Pressable onPress={navigation.navigate("Player")}>
+  return ( 
    <LinearGradient colors={["#dedcdc", "#faf7f7"]} style={styles.main_cont}>
-      
         <Image source={musicimg} style={{width: 50, height: 50}} />
 {/* {icon} */}
   <View style={styles.songInfo}>
@@ -38,10 +34,6 @@ const Bottom_Player_Tile = ({navigation}) => {
 
   </View>
     </LinearGradient>
-    
-    // </Pressable>
-    }
-    </>
   )
 }
 
@@ -49,8 +41,8 @@ export default Bottom_Player_Tile
 
 const styles = StyleSheet.create({
     main_cont:{
-        height: 70,
-        width: "90%",
+        height: "100%",
+        width: "100%",
         borderColor:"white",
         borderWidth:1,
         marginBottom:"3%",

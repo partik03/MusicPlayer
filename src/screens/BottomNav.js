@@ -25,7 +25,7 @@ const BottomNav = ({active,navigation}) => {
         {
             active === "all" ?
             <View style={styles.navcont}>
-            <Feather name="music"  size={30} style={styles.icons} style={styles.active}/>
+            <Feather name="music"  size={30} style={styles.active}/>
             <Text style={{color:'#bc00dd'}}>Music</Text>
             </View>
             :
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
         // borderRadius:30,
         borderTopLeftRadius:10,
         borderTopRightRadius:10,
+        backgroundColor:"black"
     },
     shadowProp: {
         shadowColor: 'black',

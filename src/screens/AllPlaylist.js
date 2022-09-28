@@ -1,15 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import BottomNav from './BottomNav'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const AllPlaylist = ({navigation}) => {
   return (
-    <View style={styles.container}>
-      <Text classname="text-red-800">All Playlist</Text>
+    <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
+      <Text style={styles.head1}>All Playlist</Text>
       <View style={[styles.bottomnav,styles.shadowProp,styles.elevation]}>
       <BottomNav active={"allplaylist"} navigation={navigation}/>
       </View>
-    </View>
+    </LinearGradient>
   )
 }
 
@@ -39,4 +40,9 @@ const styles = StyleSheet.create({
         elevation: 100,
         shadowColor: 'black',
       },
+      head1:{
+        color:"white",
+        fontSize: 30,
+        fontWeight: "bold",
+      }
 })
