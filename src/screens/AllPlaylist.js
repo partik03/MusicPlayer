@@ -1,9 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import BottomNav from './BottomNav'
 import { LinearGradient } from 'expo-linear-gradient'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const AllPlaylist = ({navigation}) => {
+  useEffect(() => {
+    getPlaylists();
+  }, [])
+  const getPlaylists = () => {
+    AsyncStorage.getItem('playlists')
+    .then(value=>{
+        console.log("Inside of get playlists",value);
+        setOldPlaylist(JSON.parse(value));
+    })
+    .catch(e=>{
+        console.log(e);
+    })
+    .finally(e=>{
+        console.log(e);
+    })
+}
   return (
     <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
       <Text style={styles.head1}>All Playlist</Text>
@@ -21,7 +38,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#190A25',
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
       },
       bottomnav:{
         display: 'flex',
@@ -44,5 +61,6 @@ const styles = StyleSheet.create({
         color:"white",
         fontSize: 30,
         fontWeight: "bold",
+        marginTop: 20,
       }
 })

@@ -5,13 +5,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { AntDesign } from '@expo/vector-icons';
 import { useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Dialog,{DialogButton, DialogContent, DialogFooter} from 'react-native-popup-dialog';
 const AddToPlaylist = ({navigation,route}) => {
     const {song} = route.params
     const [oldPlaylist, setOldPlaylist] = useState([])
+    const [visible, setVisible] = useState(false)
+    const [deletePlaylistRef, setDeletePlaylistRef] = useState(null)
     const playlistRef = useRef("");
     const createPlaylist = () => {
         console.log(playlistRef.current.value);     
-        const playlistData=[];
+        let playlistData=[];
         if (oldPlaylist) {
          playlistData = [...oldPlaylist];
         }
@@ -81,7 +84,7 @@ const AddToPlaylist = ({navigation,route}) => {
                         oldPlaylist  ?
                             oldPlaylist.map((item,index)=>{
                                 return(
-                                    <TouchableOpacity key={index} onPress={()=>addToExistingPlaylist(item.id)}>
+                                    <TouchableOpacity key={index} onLongPress={()=>{setDeletePlaylistRef(item);setVisible(true)}} onPress={()=>addToExistingPlaylist(item.id)}>
                                     <View style={styles.playlist} key={index}>
                                         <Text style={styles.playlistText}>{item.name}</Text>
                                         <Text style={styles.playlistText}>{item.songs.length} songs</Text>
@@ -92,8 +95,28 @@ const AddToPlaylist = ({navigation,route}) => {
                             : null
                         }
                     </ScrollView>
+
                 </View>
-               
+               <Dialog
+               visible={visible}
+                onTouchOutside={() => {setVisible(false)}}
+                onHardwareBackPress={() => {setVisible(false)}}
+                onDismiss={() => {setVisible(false)}}
+                dialogStyle={{paddingTop:20}}
+                footer={
+                    <DialogFooter>
+                         <DialogButton text="Yes" onPress={()=>{deletePlaylist(deletePlaylistRef.id);setVisible(false)}}/>
+                            <DialogButton text="No" onPress={()=>{setVisible(false)}}/>
+                    </DialogFooter>
+                }
+                
+               >
+                 { !deletePlaylistRef ? null :
+                <DialogContent>
+                 <Text style={{fontSize:20}}> Delete Playlist {deletePlaylistRef.name} ?</Text>
+                </DialogContent>
+                 }
+               </Dialog>
             </View>
         </View>
 

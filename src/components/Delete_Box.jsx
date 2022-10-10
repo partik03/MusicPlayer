@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Modal, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Delete_Box = (props) => {
+const Delete_Box = () => {
   return (
-    <View>
+   
+    <View style={{width:50,height:50}}>
       <Text>
-
+        Delete the playlist {}
       </Text>
     </View>
+   
   )
 }
 
