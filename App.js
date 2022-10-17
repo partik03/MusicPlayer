@@ -13,6 +13,7 @@ import { store } from './src/Redux/store';
 import LocalMusic from './src/screens/LocalMusic';
 import OnlineMusic from './src/screens/OnlineMusic';
 import AddToPlaylist from './src/screens/AddToPlaylist';
+import Playlist_Song from './src/screens/Playlist_Song';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -55,6 +56,11 @@ export default function App() {
         <Stack.Screen name="AddToPlaylist" component={AddToPlaylist} options={
           {
             headerShown:true,title:"Add to Playlist"
+          }
+        } />
+        <Stack.Screen name="Playlist_Songs" component={Playlist_Song} options={
+          {
+            headerShown:true,title:"Playlist Songs"
           }
         } />
       </Stack.Navigator>
