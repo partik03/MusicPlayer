@@ -29,6 +29,7 @@ export default function App() {
               headerShown: false
             }}
           />
+          {/* Cp kara karo vro */}
           <Stack.Screen
             name="AllPlaylist"
             component={AllPlaylist}
