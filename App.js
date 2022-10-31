@@ -29,7 +29,6 @@ export default function App() {
               headerShown: false
             }}
           />
-          {/* King is here guysss */}
           <Stack.Screen
             name="AllPlaylist"
             component={AllPlaylist}
