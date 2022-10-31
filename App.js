@@ -29,6 +29,7 @@ export default function App() {
               headerShown: false
             }}
           />
+          {/* Isse ghar chal jata hai? */}
           <Stack.Screen
             name="AllPlaylist"
             component={AllPlaylist}
