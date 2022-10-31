@@ -6,8 +6,6 @@ const Music_Tile = ({ icon, title, artist }) => {
   return (
     <LinearGradient colors={["#212121", "#1c1919"]} style={styles.main_cont}>
       <Image source={musicimg} style={{ width: 50, height: 50 }} />
-      {/* {icon} */}
-      {/* Hello Hacktober */}
       <View style={styles.songInfo}>
         <Text style={{ color: "white", fontSize: 15, fontWeight: "bold" }}>
           {title}
