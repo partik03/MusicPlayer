@@ -86,6 +86,7 @@ export default function App() {
     </Provider>
   );
 }
+//Variable defining properties for page
 const styles = StyleSheet.create({
   container: {
     flex: 1,
