@@ -80,7 +80,6 @@ export default function App() {
               title: "Playlist Songs"
             }}
           />
-          {/* Hacktober Fest */}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
