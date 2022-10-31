@@ -16,6 +16,7 @@ import AddToPlaylist from "./src/screens/AddToPlaylist";
 import Playlist_Song from "./src/screens/Playlist_Song";
 const Stack = createNativeStackNavigator();
 
+// App function to use it in page
 export default function App() {
   return (
     <Provider store={store}>
