@@ -4,7 +4,7 @@ import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import BottomNav from './BottomNav';
 import Music_Tile from '../components/Music_Tile';
-import { MaterialIcons } from '@expo/vector-icons';
+import { createMultiStyleIconSet, MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,8 @@ import Bottom_Player_Tile from '../components/Bottom_Player_Tile';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import * as Sound from "react-native-sound";
+import { Audio } from 'expo-av';
 const LocalMusic = ({navigation}) => {
   const mysongs = useSelector(state => state.allsongs);
   const dispatch = useDispatch();
@@ -22,6 +24,20 @@ const LocalMusic = ({navigation}) => {
     dispatch(setActiveSong(i))
     try {
       AsyncStorage.setItem('activesong_localstorage',JSON.stringify(i));
+      const playbackObj = new Audio.Sound();
+      console.log("status",activestatus);
+      if(activestatus){
+        playbackObj.loadAsync({uri:i.uri}, {shouldPlay: true});
+      }
+      if(playbackObj.getStatusAsync().isLoaded && playbackObj.getStatusAsync().isPlaying){
+        console.log("Already playing");
+        playbackObj.loadAsync({uri:i.uri}, {shouldPlay: false});
+      }
+      // else {
+      //   playbackObj.loadAsync({uri:i.uri}, {shouldPlay: false});        
+      // }
+      // console.log(activestatus)
+      
     } catch (error) {
       console.log(error);
     }
@@ -47,6 +63,46 @@ const LocalMusic = ({navigation}) => {
   const toggleStatus = () => {
     dispatch(setActiveSongStatus(!activestatus));
   }
+  // Track Player Setup
+const [trackdata, setTrackdata] = useState()
+// const setupPlayer = async()=>{
+//   try {
+//     // await TrackPlayer.setupPlayer();
+//     await TrackPlayer.updateOptions({
+//       stopWithApp:true,
+//       capabilities:[
+//         Capability.Play,
+//         Capability.Pause,
+//         Capability.Stop,
+//         Capability.SkipToNext,
+//         Capability.SkipToPrevious,
+//       ],
+//       compactCapabilities:[
+//         Capability.Play,
+//         Capability.Pause,
+//         Capability.Stop,
+//         Capability.SkipToNext,
+//         Capability.SkipToPrevious,
+//       ]
+//     })
+//     const data = mysongs;
+//     console.log(data);
+//     // let temp=data.map((e)=>{
+//     //   return{
+//     //     id:e.id,
+//     //     url:e.uri,
+//     //     title:e.filename,
+//     //     artist:e.artist,
+//     //     artwork:e.uri,
+//     //   }
+//     // })
+//     console.log(temp);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+// ----------------------------------------------------------------
+
   useEffect(() => {
     getLocalSong();
   }, [])
@@ -110,9 +166,6 @@ const styles = StyleSheet.create({
         height: "90%",
         display: 'flex',
         marginTop: 10,
-        // alignItems:'center',
-        // overflow: 'scroll',
-        // backgroundColor:'red',
     },
     music_cont:{
           height: "90%",

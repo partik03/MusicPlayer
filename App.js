@@ -6,7 +6,6 @@ import Player from './src/screens/Player';
 import AllPlaylist from './src/screens/AllPlaylist';
 import AllMusic from './src/screens/AllMusic';
 import Account from './src/screens/Account';
-
 import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './src/Redux/store';
@@ -17,7 +16,7 @@ import Playlist_Song from './src/screens/Playlist_Song';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-
+  
   return (
     <Provider store={store}>
        <NavigationContainer>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
 import BottomNav from './BottomNav'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -6,9 +6,27 @@ import { LinearGradient } from 'expo-linear-gradient'
 const Account = ({navigation}) => {
   return (
     <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
-<TextInput style={styles.input} placeholder="Email" />
-<View style={[styles.bottomnav,styles.shadowProp,styles.elevation]}>
-      <BottomNav active={"account"} navigation={navigation}/>
+      <View style={styles.container}>
+        <Text style={{color:"white",fontSize:40,fontWeight:"bold"}}>Login</Text>
+        <TextInput
+          // value={this.state.username}
+          // onChangeText={(username) => this.setState({ username })}
+          placeholder={'Username'}
+          style={styles.input}
+        />
+        <TextInput
+          // value={this.state.password}
+          // onChangeText={(password) => this.setState({ password })}
+          placeholder={'Password'}
+          secureTextEntry={true}
+          style={styles.input}
+        />
+        
+        <Button
+          title={'Login'}
+          style={styles.input}
+          // onPress={this.onLogin.bind(this)}
+        />
       </View>
     </LinearGradient>
   )
@@ -40,12 +58,13 @@ const styles = StyleSheet.create({
         elevation: 100,
         shadowColor: 'black',
       },
-      input :{
-        color: 'black',
-        backgroundColor:'white',
-        width: "100%",
-        height: 50,
-
-      }
-
+      input: {
+        width: 200,
+        height: 44,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'white',
+        marginBottom: 10,
+        color:"white",
+      },
 })
