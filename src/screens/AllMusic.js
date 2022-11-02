@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Music from '../components/Music';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
+
 const AllMusic = ({navigation}) => {
   // const mysongs =useSelector(state => state.allsongs);
   // console.log(mysongs);
@@ -58,6 +59,8 @@ const AllMusic = ({navigation}) => {
     dispatch(setAllSongs(assets));
     // console.log("efuncun",mysongs);
   }
+
+
   useEffect(() => {
     getPermission();
   },[])

@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Playlist_Song = ({navigation,name,songs,number}) => {
 //   const mysongs = useSelector(state => state.allsongs);
+console.log("Playlist songs",songs);
   const dispatch = useDispatch();
   const handlePress =(i)=>{
     dispatch(setActiveSong(i))
@@ -54,7 +55,7 @@ const Playlist_Song = ({navigation,name,songs,number}) => {
     <LinearGradient colors={["hsla(0, 0%, 2%, 1)","hsla(300, 17%, 2%, 1)","hsla(0, 0%, 0%, 1)"]} style={styles.container}>
         <View style={styles.head_cont}>
 
-    <Text style={styles.head}>{ name && name}</Text>
+    <Text style={styles.head}>{ name }</Text>
         </View>
         <ScrollView style={{width:"100%",height:"100%"}}>
         <View style={[styles.music,styles.music_cont]} >
